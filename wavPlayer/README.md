@@ -17,17 +17,24 @@ Using CircuitPython on a Raspberry Pi Pico we can play short clips of sounds.To 
 - I used sox and ffmpeg to prepare modifications of my sound file
 
 ```bash
-#Install necessary software in linux
+# Install necessary software in linux
 sudo apt-get install mediainfo ffmpeg sox
 
-#verify sound file properties wih mediainfo
+# verify sound file properties wih mediainfo
 mediainfo file.wav
 
-#example of augmenting volume by 10dB with ffmpeg
+# change file to 16 bits with sox
+sox file.wav -b 16 output.wav
+
+# It is recommended to use the -bitexact flag when changing sample rates or file lengths
+ffmpeg -i input.wav -bitexact -ar 16000 output_16kHz.wav
+
+# example of cropping file length starting at 1 second, ending at 9 seconds
+ffmpeg -i input.wav -ss 00:00:01 -to 00:00:09 output.wav
+
+# example of augmenting volume by 10dB with ffmpeg
 ffmpeg -i input.wav -filter:a "volume=10dB" output.wav
 
-#change file to 16 bits with sox
-sox file.wav -b 16 output.wav
 ```
 
 ### Hookup guide:
