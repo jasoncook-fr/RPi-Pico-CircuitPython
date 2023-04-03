@@ -24,13 +24,17 @@ sudo apt-get install mediainfo ffmpeg sox
 mediainfo file.wav
 
 # change file to 16 bits with sox
-sox file.wav -b 16 output.wav
+sox input_24bits.wav -b 16 output_16bits.wav
 
 # It is recommended to use the -bitexact flag when changing sample rates or file lengths
-ffmpeg -i input.wav -bitexact -ar 16000 output_16kHz.wav
+# Careful with bitrates. Lower bitrates causes loss of high frequency sounds
+ffmpeg -i input_48kHz.wav -bitexact -ar 16000 output_16kHz.wav
+
+# To help reduce file size, change stereo output to mono using the -ac flag
+ffmpeg -i input_stereo.wav -ac 1 output_mono.wav
 
 # example of cropping file length starting at 1 second, ending at 9 seconds
-ffmpeg -i input.wav -ss 00:00:01 -to 00:00:09 output.wav
+ffmpeg -i input_60s.wav -ss 00:00:01 -to 00:00:09 output_8s.wav
 
 # example of augmenting volume by 10dB with ffmpeg
 ffmpeg -i input.wav -filter:a "volume=10dB" output.wav
