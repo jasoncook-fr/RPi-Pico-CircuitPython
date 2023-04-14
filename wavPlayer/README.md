@@ -39,6 +39,10 @@ ffmpeg -i input_60s.wav -ss 00:00:01 -to 00:00:09 output_8s.wav
 # example of augmenting volume by 10dB with ffmpeg
 ffmpeg -i input.wav -filter:a "volume=10dB" output.wav
 
+# example of high-pass filtering (I did this for birds, to remove the atmospherique bass tones)
+# The low pass frequency is pretty high in this example
+ffmpeg -i output.wav -af "highpass=f=500, lowpass=f=7000" high_pass.wav
+
 ```
 
 ### Hookup guide:
